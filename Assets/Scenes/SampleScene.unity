@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
+  - component: {fileID: 330585548}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -206,7 +207,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2588186, y: -0, z: -0, w: 0.965926}
-  m_LocalPosition: {x: -0.5223894, y: 4.38, z: -8.27207}
+  m_LocalPosition: {x: -0.5223894, y: 3.38, z: -7.27207}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -256,6 +257,20 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &330585548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e1f3a384010274b99a81c95bd074aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::camara
+  sensibilidad: 100
+  Player: {fileID: 1843235335}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,12 +464,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 244ae33fc9ce6ac4796fcb82a5a63ef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMoviment
-  velocidad: 5
+  velocidad: 10
+  fuerzaSaltar: 60
+  peso: 5
 --- !u!4 &1843235335 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6875321492634712044, guid: 1878def736e0b4540ac4e82d0a697039, type: 3}
   m_PrefabInstance: {fileID: 8483142306819828112}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &1843235339
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843235326}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &5540843274266826295
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -586,6 +630,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5581104031617726997, guid: 1878def736e0b4540ac4e82d0a697039, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1843235331}
+    - targetCorrespondingSourceObject: {fileID: 5581104031617726997, guid: 1878def736e0b4540ac4e82d0a697039, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1843235339}
   m_SourcePrefab: {fileID: 100100000, guid: 1878def736e0b4540ac4e82d0a697039, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

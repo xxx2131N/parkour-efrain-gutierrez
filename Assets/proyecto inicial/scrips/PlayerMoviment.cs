@@ -2,23 +2,50 @@ using UnityEngine;
 
 public class PlayerMoviment : MonoBehaviour
 {
-    [SerializeField] private float velocidad = 5f;
-    private Vector3 direccion= Vector3.zero;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] private float velocidad = 10f;
+    [SerializeField] private float fuerzaSaltar = 7f;
+    [SerializeField] private float peso = 5f;
+
+    private Rigidbody rb;
+
+    private float horizontal;
+    private float vertical;
+
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
+        rb.mass = peso;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        float saltar = Input.GetAxisRaw("Jump");
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
 
-        direccion = new Vector3(horizontal, saltar, vertical);
-        Vector3 movimiento = direccion * velocidad * Time.deltaTime;
-        transform.Translate(movimiento, Space.World);
+        if (Input.GetButtonDown("Jump"))
+        {
+            Saltar();
+        }
+    }
+
+    void FixedUpdate()
+    {
+        Vector3 direccion = new Vector3(horizontal, 0f, vertical).normalized;
+
+        Vector3 movimiento = direccion * velocidad;
+
+        rb.linearVelocity = new Vector3(
+            movimiento.x,
+            rb.linearVelocity.y,
+            movimiento.z
+        );
+    }
+
+    void Saltar()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, 0.6f))
+        {
+            rb.AddForce(Vector3.up * fuerzaSaltar, ForceMode.Impulse);
+        }
     }
 }
