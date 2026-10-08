@@ -2,16 +2,36 @@ using UnityEngine;
 
 public class objetos1 : MonoBehaviour
 {
-    [SerializeField] private float velocidad = 10f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] private float velocidad = 50f;
+    private Rigidbody rb;
+
     void Start()
     {
-        
+        // Intenta obtener el Rigidbody
+        rb = GetComponent<Rigidbody>();
+
+        if (rb == null)
+        {
+            Debug.LogWarning("Falta agregar el componente Rigidbody a " + gameObject.name + ". Agrégalo y marca 'Is Kinematic'.");
+        }
     }
 
-    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (rb != null)
+        {
+            // Mueve el objeto usando físicas (empuja al personaje)
+            Quaternion rotacionFrame = Quaternion.Euler(0, 0, velocidad * Time.fixedDeltaTime);
+            rb.MoveRotation(rb.rotation * rotacionFrame);
+        }
+    }
+
     void Update()
     {
-        transform.Rotate(0,0,velocidad * Time.deltaTime);
+        // Si no tiene Rigidbody, gira de la forma básica
+        if (rb == null)
+        {
+            transform.Rotate(0, 0, velocidad * Time.deltaTime);
+        }
     }
 }

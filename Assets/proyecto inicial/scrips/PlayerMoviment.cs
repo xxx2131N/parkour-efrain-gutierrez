@@ -2,35 +2,35 @@ using UnityEngine;
 
 public class PlayerMoviment : MonoBehaviour
 {
-    [SerializeField] private float velocidad = 10f;
-    [SerializeField] private float fuerzaSaltar = 7f;
-    [SerializeField] private float peso = 5f;
+    private float velocidad = 5f;
+    private float fuerzaSaltar = 10f;
+    private float peso = 1f;
 
     private Rigidbody rb;
-
-    private float horizontal;
-    private float vertical;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
         rb.mass = peso;
     }
 
     void Update()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetButtonDown("Jump"))
-        {
-            Saltar();
-        }
-    }
+        Transform camera = Camera.main.transform;
 
-    void FixedUpdate()
-    {
-        Vector3 direccion = new Vector3(horizontal, 0f, vertical).normalized;
+        Vector3 frente = camera.forward;
+        Vector3 derecha = camera.right;
+
+        frente.y = 0f;
+        derecha.y = 0f;
+        frente.Normalize();
+        derecha.Normalize();
+
+        Vector3 direccion = (frente * vertical + derecha * horizontal).normalized;
 
         Vector3 movimiento = direccion * velocidad;
 
@@ -39,11 +39,8 @@ public class PlayerMoviment : MonoBehaviour
             rb.linearVelocity.y,
             movimiento.z
         );
-    }
 
-    void Saltar()
-    {
-        if (Physics.Raycast(transform.position, Vector3.down, 0.6f))
+        if (Input.GetButtonDown("Jump") && Mathf.Abs(rb.linearVelocity.y) <= 0.01f)
         {
             rb.AddForce(Vector3.up * fuerzaSaltar, ForceMode.Impulse);
         }
